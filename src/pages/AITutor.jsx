@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 import aiService from "../services/aiService";
-import { studentProfile } from "../data/mockData";
+import { useApp } from "../context/AppContext";
 
 const quickActions = [
   { label: 'Explain Simply', icon: Lightbulb, mode: 'simple' },
@@ -28,7 +28,7 @@ const suggestedTopics = [
   'Help me with my weak areas',
 ];
 
-function ChatMessage({ message, isUser }) {
+function ChatMessage({ message, isUser, userInitials = 'ST' }) {
   return (
     <div
       className={`flex gap-3 ${
@@ -43,7 +43,7 @@ function ChatMessage({ message, isUser }) {
         }`}
       >
         {isUser ? (
-          <span className="text-xs font-bold">PS</span>
+          <span className="text-xs font-bold">{userInitials}</span>
         ) : (
           <Bot className="w-4 h-4" />
         )}
@@ -110,7 +110,9 @@ export default function AITutor() {
 
   const messagesEndRef = useRef(null);
 
-  const student = studentProfile;
+  const { profile } = useApp();
+  const student = profile;
+  const userInitials = profile?.name ? profile.name.split(' ').map(n => n[0]).join('') : 'ST';
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
@@ -272,6 +274,7 @@ export default function AITutor() {
             key={msg.id}
             message={msg.text}
             isUser={msg.isUser}
+            userInitials={userInitials}
           />
         ))}
 

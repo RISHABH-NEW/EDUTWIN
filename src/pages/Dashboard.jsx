@@ -72,11 +72,18 @@ export default function Dashboard() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">
-          {getGreeting()}, {profile.name.split(' ')[0]} 👋
-        </h1>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">
+            Welcome back, {profile.name} 👋
+          </h1>
+          {profile.branch && (
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-primary-50 dark:bg-primary-950/70 text-primary-700 dark:text-primary-300 border border-primary-200/60 dark:border-primary-800/50">
+              {profile.branch} Student
+            </span>
+          )}
+        </div>
         <p className="text-surface-500 dark:text-surface-400 mt-1">
-          Your EduTwin has analyzed your recent learning activity.
+          {profile.branch ? `${profile.branch} Student · ` : ''}Your EduTwin has analyzed your recent learning activity.
         </p>
       </div>
 

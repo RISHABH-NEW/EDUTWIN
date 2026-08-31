@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   GraduationCap, Sparkles, Bot, FileText, TrendingUp, Compass,
   ArrowRight, ChevronRight, Zap, Shield,
 } from 'lucide-react';
 import ThemeToggle from '../components/ui/ThemeToggle';
+import DemoLoginModal from '../components/ui/DemoLoginModal';
 
 const features = [
   {
@@ -52,6 +54,7 @@ const steps = [
 ];
 
 export default function LandingPage() {
+  const [demoModalOpen, setDemoModalOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -59,25 +62,37 @@ export default function LandingPage() {
       {/* Nav */}
       <nav className="fixed top-0 w-full bg-white/80 dark:bg-surface-900/80 backdrop-blur-md border-b border-surface-100 dark:border-surface-800 z-50 transition-colors duration-200">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => navigate('/')}>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-600 to-accent-500 flex items-center justify-center shadow-sm">
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-bold text-surface-900 dark:text-surface-100">EduTwin</span>
           </div>
+
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle size="md" />
+
+            {/* Single Demo Login option */}
             <button
-              onClick={() => navigate('/login')}
-              className="btn-ghost text-sm"
+              type="button"
+              onClick={() => setDemoModalOpen(true)}
+              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold text-primary-600 dark:text-primary-300
+                bg-primary-50 dark:bg-primary-950/70 hover:bg-primary-100 dark:hover:bg-primary-900/60
+                border border-primary-200/60 dark:border-primary-800/60 transition-all duration-200 flex items-center gap-1.5"
+              id="nav-demo-login-btn"
             >
-              Login
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Demo Login</span>
             </button>
+
+            {/* Sign Up Free — Navigates to /signup */}
             <button
-              onClick={() => navigate('/login')}
-              className="btn-primary text-sm"
+              type="button"
+              onClick={() => navigate('/signup')}
+              className="btn-primary text-xs sm:text-sm px-3.5 py-1.5 sm:px-4 sm:py-2"
+              id="nav-signup-free-btn"
             >
-              Start Learning
+              Sign Up Free
             </button>
           </div>
         </div>
@@ -107,20 +122,21 @@ export default function LandingPage() {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up"
             style={{ animationDelay: '0.2s' }}>
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => setDemoModalOpen(true)}
               className="btn-primary text-base px-8 py-3 rounded-2xl flex items-center gap-2 shadow-lg
                 hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
+              id="hero-demo-login-btn"
             >
-              Start Learning
+              <Sparkles className="w-4 h-4" />
+              <span>Explore Demo Student</span>
               <ArrowRight className="w-5 h-5" />
             </button>
             <button
-              onClick={() => {
-                document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => navigate('/login')}
               className="btn-secondary text-base px-8 py-3 rounded-2xl flex items-center gap-2"
+              id="hero-login-btn"
             >
-              Explore EduTwin
+              Sign In with Account
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
@@ -129,8 +145,8 @@ export default function LandingPage() {
           <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-2xl mx-auto animate-slide-up"
             style={{ animationDelay: '0.3s' }}>
             {[
-              { value: '10K+', label: 'Active Learners' },
-              { value: '500+', label: 'Topics Covered' },
+              { value: '6', label: 'Demo Student Profiles' },
+              { value: '500+', label: 'Curriculum Topics' },
               { value: '95%', label: 'Satisfaction Rate' },
               { value: '24/7', label: 'AI Tutor Access' },
             ].map((stat) => (
@@ -202,17 +218,26 @@ export default function LandingPage() {
             Ready to Transform Your Learning?
           </h2>
           <p className="mt-4 text-primary-200 dark:text-primary-300 text-lg max-w-xl mx-auto">
-            Join thousands of students who are learning smarter with their AI-powered digital twin.
+            Explore EduTwin instantly with 6 curated demo student accounts across CSE, AI, and Electrical Engineering.
           </p>
-          <button
-            onClick={() => navigate('/login')}
-            className="mt-8 px-8 py-3 bg-white text-primary-700 dark:bg-surface-800 dark:text-primary-300 dark:hover:bg-surface-700 rounded-2xl font-semibold text-base
-              hover:bg-primary-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]
-              inline-flex items-center gap-2"
-          >
-            Get Started Free
-            <ArrowRight className="w-5 h-5" />
-          </button>
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              onClick={() => setDemoModalOpen(true)}
+              className="px-8 py-3 bg-white text-primary-700 dark:bg-surface-800 dark:text-primary-300 dark:hover:bg-surface-700 rounded-2xl font-semibold text-base
+                hover:bg-primary-50 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]
+                inline-flex items-center gap-2"
+            >
+              <Sparkles className="w-4 h-4 text-primary-500" />
+              <span>Explore Demo Students</span>
+            </button>
+            <button
+              onClick={() => navigate('/signup')}
+              className="px-6 py-3 bg-primary-700/60 dark:bg-surface-900/60 text-white rounded-2xl font-semibold text-sm
+                border border-white/20 hover:bg-primary-700/90 transition-all duration-300"
+            >
+              Sign Up Free
+            </button>
+          </div>
         </div>
       </section>
 
@@ -225,10 +250,16 @@ export default function LandingPage() {
           <span className="text-white font-bold">EduTwin</span>
         </div>
         <p className="text-surface-400 text-sm">
-          Your AI-powered learning twin. Built for Smart India Hackathon.
+          Your AI-powered learning twin.
         </p>
         <p className="text-surface-600 text-xs mt-2">© 2026 EduTwin. All rights reserved.</p>
       </footer>
+
+      {/* Demo Login Modal Dialog */}
+      <DemoLoginModal
+        isOpen={demoModalOpen}
+        onClose={() => setDemoModalOpen(false)}
+      />
     </div>
   );
 }

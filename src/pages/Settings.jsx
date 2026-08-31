@@ -8,11 +8,12 @@ export default function Settings() {
   const { theme, setTheme } = useTheme();
 
   const [formData, setFormData] = useState({
-    name: profile.name,
-    class: profile.class,
-    course: profile.course,
-    email: profile.email,
-    learningGoals: profile.learningGoals,
+    name: profile.name || '',
+    branch: profile.branch || 'CSE',
+    class: profile.class || '',
+    course: profile.course || '',
+    email: profile.email || '',
+    learningGoals: profile.learningGoals || '',
     preferredLanguage: settings.preferredLanguage || 'English',
     difficulty: settings.difficulty || 'Adaptive',
     notifications: {
@@ -37,6 +38,7 @@ export default function Settings() {
     setProfile((prev) => ({
       ...prev,
       name: formData.name,
+      branch: formData.branch,
       class: formData.class,
       course: formData.course,
       email: formData.email,
@@ -116,7 +118,7 @@ export default function Settings() {
             <h2 className="section-title">Student Profile</h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300 mb-1">Full Name</label>
               <input
@@ -125,6 +127,17 @@ export default function Settings() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300 mb-1">Branch</label>
+              <input
+                type="text"
+                className="input-field"
+                value={formData.branch}
+                onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
+                placeholder="e.g. CSE, AI, EE (Electrical)"
               />
             </div>
 
@@ -149,7 +162,7 @@ export default function Settings() {
               />
             </div>
 
-            <div>
+            <div className="sm:col-span-2 lg:col-span-2">
               <label className="block text-xs font-semibold text-surface-700 dark:text-surface-300 mb-1">Department / Course</label>
               <input
                 type="text"

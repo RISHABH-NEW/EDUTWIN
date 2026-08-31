@@ -126,13 +126,15 @@ export default function Sidebar({ isOpen, onClose }) {
           <div className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''}`}>
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center flex-shrink-0 shadow-sm">
               <span className="text-white text-sm font-semibold">
-                {profile.name.split(' ').map(n => n[0]).join('')}
+                {(profile?.name || 'Student').split(' ').map(n => n[0]).join('')}
               </span>
             </div>
             {!collapsed && (
               <div className="animate-fade-in min-w-0 flex-1">
-                <p className="text-sm font-semibold text-surface-800 dark:text-surface-200 truncate">{profile.name}</p>
-                <p className="text-xs text-surface-400 dark:text-surface-500 truncate">{profile.course}</p>
+                <p className="text-sm font-semibold text-surface-800 dark:text-surface-200 truncate">{profile?.name || 'Student'}</p>
+                <p className="text-xs text-surface-400 dark:text-surface-500 truncate">
+                  {profile?.branch ? `${profile.branch} Student` : (profile?.course || '')}
+                </p>
               </div>
             )}
             <button
